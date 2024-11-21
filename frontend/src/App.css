@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+}
+
+.property-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-img {
+  max-width: 100%;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover; /* Ajusta la imagen al recuadro */
+}
+
+.card-body {
+  text-align: left;
+}
+
+.card-title {
+  font-size: 1.25em;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin-bottom: 10px;
+}
