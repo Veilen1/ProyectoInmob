@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const connectDB = require('../../backend/config/db');
+const connectDB = require('./config/db.mjs');
 const propertyRoutes = require('./routes/propertyRoutes.mjs');
 const cors = require('cors');
 const bodyParser = require('body-parser');

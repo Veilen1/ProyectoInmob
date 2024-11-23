@@ -1,5 +1,5 @@
 const express = require('express');
-const { getProperties, createProperty, deleteProperty } = require('../controllers/propertyController');
+const { getProperties, createProperty, deleteProperty } = require('../controllers/propertyController.mjs');
 const router = express.Router();
 
 router.route('/').get(getProperties).post(createProperty);
