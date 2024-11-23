@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
+  build: {
+    rollupOptions: {
+      external: ['react-dom/client'], // Opcional, pero puede ayudar
+    },
   },
-  root: '.', // Asegúrate de que Vite use la carpeta raíz como raíz del proyecto
 });

@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/src/main.jsx"
+      "dest": "/index.html"
     }
   ]
 }
