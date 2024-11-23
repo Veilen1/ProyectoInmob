@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProperties } from '../api/propertyApi.mjs';
+import { getProperties } from '../api/propertyApi.js';
 import PropertyCard from './PropertyCard';
 import PropertyForm from './PropertyForm';
 

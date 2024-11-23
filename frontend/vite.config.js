@@ -5,7 +5,10 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['react-dom/client'], // Opcional, pero puede ayudar
-    },
+      external: ['react', 'react-dom']
+    }
   },
+  server: {
+    port: 3000,
+  }
 });
