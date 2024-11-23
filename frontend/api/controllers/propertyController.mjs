@@ -1,4 +1,4 @@
-const Property = require('../models/Property');
+const Property = require('../models/Property.mjs');
 
 const getProperties = async (req, res) => {
   const properties = await Property.find({});
