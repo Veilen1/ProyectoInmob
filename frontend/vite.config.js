@@ -6,23 +6,23 @@ export default defineConfig({
   plugins: [
     react(),
     createHtmlPlugin({
-      minify: true,
-      template: './public/index.html', // Usa el index.html de la carpeta 'public'
-    })
+      minify: true, // Minimiza el HTML para producción
+      template: './public/index.html', // Archivo HTML base en la carpeta public
+    }),
   ],
-  publicDir: 'public', // Sirve los archivos estáticos desde aquí
+  publicDir: 'public', // Public sirve como recursos estáticos
   build: {
-    outDir: 'dist',
+    outDir: 'dist', // Carpeta de salida
     rollupOptions: {
-      external: ['react', 'react-dom']
-    }
+      input: './public/index.html', // Define explícitamente el archivo de entrada
+    },
   },
   server: {
     port: 3000,
   },
   resolve: {
     alias: {
-      '@': '/src' // Alias para facilitar las rutas a src si es necesario
-    }
-  }
+      '@': '/src', // Alias para facilitar importaciones desde src
+    },
+  },
 });
