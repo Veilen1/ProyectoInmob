@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import { createProperty } from '../api/propertyApi';
 
 const PropertyForm = ({ onAddProperty }) => {
   const [title, setTitle] = useState('');
@@ -24,8 +24,8 @@ const PropertyForm = ({ onAddProperty }) => {
     };
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/properties`, newProperty);
-      onAddProperty(response.data);
+      const response = await createProperty(newProperty);
+      onAddProperty(response);
       setTitle('');
       setDescription('');
       setPrice('');

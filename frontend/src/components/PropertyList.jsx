@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getProperties } from '../api/propertyApi.js';
+import React, { useEffect, useState } from 'react';
+import { getProperties } from '../api/propertyApi';
 import PropertyCard from './PropertyCard';
 import PropertyForm from './PropertyForm';
 
@@ -14,6 +14,7 @@ const PropertyList = () => {
         const data = await getProperties();
         setProperties(data);
       } catch (err) {
+        console.error('Error fetching properties:', err); // Log para verificar el error
         setError(err.message);
       } finally {
         setLoading(false);
@@ -42,7 +43,7 @@ const PropertyList = () => {
     <div>
       <PropertyForm onAddProperty={handleAddProperty} />
       <div className="property-list">
-        {properties.map(property => (
+        {Array.isArray(properties) && properties.map(property => (
           <PropertyCard key={property._id} property={property} onDeleteProperty={handleDeleteProperty} />
         ))}
       </div>
