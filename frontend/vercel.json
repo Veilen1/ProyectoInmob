@@ -15,13 +15,12 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "source": "/api/properties/(.*)",
+      "destination": "/api/property.js"
     },
     {
       "source": "/(.*)",
       "destination": "/public/index.html"
     }
-  ],
-  "installCommand": "npm install"
+  ]
 }
