@@ -13,14 +13,14 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "./api/(.*)"
+      "source": "/api/(.*)",
+      "destination": "./api/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "./public/index.html"
+      "source": "/(.*)",
+      "destination": "./public/index.html"
     }
   ],
   "installCommand": "npm install"
