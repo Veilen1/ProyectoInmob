@@ -16,11 +16,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "./api/$1"
+      "destination": "/api/$1"
     },
     {
       "source": "/(.*)",
-      "destination": "./public/index.html"
+      "destination": "/public/index.html"
     }
   ],
   "installCommand": "npm install"
