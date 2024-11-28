@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { createProperty } from '../api/propertyApi';
 
 const PropertyForm = ({ onAddProperty }) => {
   const [title, setTitle] = useState('');
@@ -11,31 +10,10 @@ const PropertyForm = ({ onAddProperty }) => {
   const [location, setLocation] = useState('');
   const [images, setImages] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newProperty = {
-      title,
-      description,
-      price: Number(price),
-      bedrooms: Number(bedrooms),
-      bathrooms: Number(bathrooms),
-      location,
-      images: images.split(',').map((img) => img.trim())
-    };
-
-    try {
-      const response = await createProperty(newProperty);
-      onAddProperty(response);
-      setTitle('');
-      setDescription('');
-      setPrice('');
-      setBedrooms('');
-      setBathrooms('');
-      setLocation('');
-      setImages('');
-    } catch (error) {
-      console.error('Error adding property:', error);
-    }
+    const property = { title, description, price, bedrooms, bathrooms, location, images: images.split(',') };
+    onAddProperty(property);
   };
 
   return (

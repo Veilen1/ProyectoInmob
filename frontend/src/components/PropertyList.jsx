@@ -1,52 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { getProperties } from '../api/propertyApi';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from '../utils/axiosConfig';
 import PropertyCard from './PropertyCard';
-import PropertyForm from './PropertyForm';
+import AuthContext from '../context/AuthContext';
 
 const PropertyList = () => {
   const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const data = await getProperties();
-        setProperties(data);
+        const res = await axios.get('/api/properties');
+        setProperties(res.data);
       } catch (err) {
-        console.error('Error fetching properties:', err); // Log para verificar el error
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.error(err);
       }
     };
+
     fetchProperties();
   }, []);
 
-  const handleAddProperty = (newProperty) => {
-    setProperties([...properties, newProperty]);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/api/properties/${id}`, {
+        headers: { Authorization: localStorage.getItem('token') }
+      });
+      setProperties(properties.filter(property => property._id !== id));
+    } catch (err) {
+      console.error(err);
+    }
   };
-
-  const handleDeleteProperty = (id) => {
-    setProperties(properties.filter(property => property._id !== id));
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   return (
-    <div>
-      <PropertyForm onAddProperty={handleAddProperty} />
-      <div className="property-list">
-        {Array.isArray(properties) && properties.map(property => (
-          <PropertyCard key={property._id} property={property} onDeleteProperty={handleDeleteProperty} />
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-6">Properties</h1>
+      <div className="flex flex-wrap justify-around">
+        {properties.map(property => (
+          <PropertyCard key={property._id} property={property} onDeleteProperty={handleDelete} role={user?.role} userId={user?._id} />
         ))}
       </div>
+      {user?.role === 'admin' || user?.role === 'inmobiliario' ? (
+        <div className="mt-4">
+          <a href="/create-property" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Add Property</a>
+        </div>
+      ) : null}
     </div>
   );
 };

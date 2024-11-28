@@ -1,65 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import Slider from 'react-slick';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Importa los estilos del carrusel
 
-const PropertyCard = ({ property, onDeleteProperty }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/300'; // URL de una imagen de reemplazo
-  };
-
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/properties/${property._id}`);
-      onDeleteProperty(property._id);
-    } catch (error) {
-      console.error('Error deleting property:', error);
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % property.images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [property.images.length]);
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    beforeChange: (current, next) => setCurrentImageIndex(next),
+const PropertyCard = ({ property, onDeleteProperty, role, userId }) => {
+  const handleDelete = () => {
+    onDeleteProperty(property._id);
   };
 
   return (
-    <div className="card">
-      <Slider {...settings}>
+    <div className="border border-gray-300 rounded-lg shadow-lg m-4 p-4 bg-white w-64">
+      <Carousel showThumbs={false} className="property-carousel">
         {property.images.map((image, index) => (
-          <div key={index}>
-            <img
-              src={image}
-              alt={property.title}
-              onError={handleImageError}
-              className="card-img"
-            />
+          <div key={index} className="h-40 overflow-hidden">
+            <img src={image} alt={`Property ${index + 1}`} className="object-contain w-full h-full rounded-lg" />
           </div>
         ))}
-      </Slider>
-      <div className="card-body">
-        <h5 className="card-title">{property.title}</h5>
-        <p className="card-text">{property.description}</p>
-        <p className="card-text"><strong>Price:</strong> ${property.price}</p>
-        <p className="card-text"><strong>Bedrooms:</strong> {property.bedrooms}</p>
-        <p className="card-text"><strong>Bathrooms:</strong> {property.bathrooms}</p>
-        <p className="card-text"><strong>Location:</strong> {property.location}</p>
-        <button onClick={handleDelete}>Delete</button>
+      </Carousel>
+      <div className="p-4">
+        <h5 className="text-lg font-bold mb-2">{property.title}</h5>
+        <p className="text-sm mb-2">{property.description}</p>
+        <p className="text-sm mb-2"><strong>Price:</strong> ${property.price}</p>
+        <p className="text-sm mb-2"><strong>Bedrooms:</strong> {property.bedrooms}</p>
+        <p className="text-sm mb-2"><strong>Bathrooms:</strong> {property.bathrooms}</p>
+        <p className="text-sm mb-2"><strong>Location:</strong> {property.location}</p>
+        {(role === 'admin' || (role === 'inmobiliario' && property.user && property.user._id === userId)) && (
+          <button className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700 text-sm" onClick={handleDelete}>Delete</button>
+        )}
       </div>
     </div>
   );
@@ -75,8 +42,15 @@ PropertyCard.propTypes = {
     location: PropTypes.string.isRequired,
     images: PropTypes.arrayOf(PropTypes.string).isRequired,
     _id: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      username: PropTypes.string,
+      email: PropTypes.string,
+    }),
   }).isRequired,
   onDeleteProperty: PropTypes.func.isRequired,
+  role: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default PropertyCard;
