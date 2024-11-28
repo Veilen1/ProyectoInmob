@@ -6,7 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 import { AuthProvider } from './context/AuthContext';
 import './App.css'; // Importa el archivo CSS
 
