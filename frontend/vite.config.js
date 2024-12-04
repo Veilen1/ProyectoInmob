@@ -21,7 +21,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Asegúrate de que el backend esté corriendo en este puerto
+        target: 'http://52.67.60.212:3000', // Asegúrate de que el backend esté corriendo en este puerto
         changeOrigin: true,
         secure: false,
       },
