@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import AuthContext from '../context/AuthContext.jsx'; // Actualiza la extensión aquí
+import AuthContext from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');

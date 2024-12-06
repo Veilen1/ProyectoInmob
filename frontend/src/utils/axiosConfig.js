@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-axios.interceptors.request.use(
+const api = axios.create({
+  baseURL: import.meta.env.VITE_REACT_APP_API_URL, // Define la URL base
+});
+
+api.interceptors.request.use(
   config => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -13,4 +17,4 @@ axios.interceptors.request.use(
   }
 );
 
-export default axios;
+export default api;
