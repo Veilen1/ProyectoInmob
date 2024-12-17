@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import api from '../utils/axiosConfig'; // Importa la instancia de Axios configurada
+import api from '../utils/axiosConfig'; // Asegúrate de tener una instancia de Axios configurada
 
 const AuthContext = createContext();
 
@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const res = await api.get('/auth/me'); // Usa la instancia de Axios configurada
+          const res = await api.get('api/auth/me'); // Usa la instancia de Axios configurada
           setUser(res.data);
         } catch (err) {
-          console.error(err);
+          console.error('Error fetching user:', err);
         }
       }
       setLoading(false);
@@ -26,14 +26,23 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await api.post('/auth/login', { email, password }); // Usa la instancia de Axios configurada
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.user);
+    try {
+      const res = await api.post('api/auth/login', { email, password }); // Usa la instancia de Axios configurada
+      localStorage.setItem('token', res.data.token);
+      setUser(res.data.user);
+    } catch (err) {
+      console.error('Login error:', err);
+      throw err; // Re-throw the error to handle it in the component
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
+    try {
+      localStorage.removeItem('token');
+      setUser(null);
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
   };
 
   return (

@@ -12,7 +12,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth/register', { username, email, password, role });
+      await axios.post('api/auth/register', { username, email, password, role });
       // Redirigir al usuario a la página de login
       window.location.href = '/login';
     } catch (err) {

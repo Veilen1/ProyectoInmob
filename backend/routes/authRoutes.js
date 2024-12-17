@@ -8,7 +8,10 @@ const router = express.Router();
 router.post('/register', registerUser);
 
 // Iniciar sesión
-router.post('/login', loginUser);
+router.post('/login', (req, res, next) => {
+    console.log('Received login request:', req.body);
+    next();
+  }, loginUser);
 
 // Obtener información del usuario autenticado
 router.get('/me', auth, getMe);
