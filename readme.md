@@ -12,6 +12,13 @@ Este proyecto es una aplicación web para la gestión de propiedades inmobiliari
 - Explorar la implementación de una API en la nube con AWS, incluyendo configuración de puertos y seguridad HTTPS.
 - Aplicar buenas prácticas de desarrollo como el uso de Nginx y PM2 para una ejecución confiable.
 
+## Características
+- Registro e inicio de sesión de usuarios con seguridad mediante JWT.
+- Gestión de propiedades inmobiliarias: crear, leer, actualizar y eliminar propiedades.
+- Diseño responsivo utilizando Tailwind CSS.
+- API protegida con HTTPS.
+- Configuración optimizada para despliegue en la nube.
+
 ## Tecnologías y Frameworks Utilizados
 
 ### Frontend:
