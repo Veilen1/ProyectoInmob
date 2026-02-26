@@ -7,6 +7,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 
 dotenv.config(); // Cargar las variables de entorno
 connectDB();
@@ -15,13 +16,15 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: '*',
+  origin: 'http://localhost:5173', // Cambia esto al origen de tu frontend
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cookieParser());
 
 // Rutas de la API
 app.use('/api/properties', propertyRoutes);

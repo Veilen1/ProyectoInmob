@@ -1,11 +1,8 @@
 import express from 'express';
-import { registerUser, loginUser, getMe } from '../controllers/userController.js';
+import { loginUser, registerUser, getMe, logoutUser } from '../controllers/userController.js';
 import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
-
-// Registrar un nuevo usuario
-router.post('/register', registerUser);
 
 // Iniciar sesión
 router.post('/login', (req, res, next) => {
@@ -13,7 +10,13 @@ router.post('/login', (req, res, next) => {
     next();
   }, loginUser);
 
+// Registrar un nuevo usuario
+router.post('/register', registerUser);
+
 // Obtener información del usuario autenticado
 router.get('/me', auth, getMe);
+
+// Cerrar sesión
+router.post('/logout', logoutUser);
 
 export default router;

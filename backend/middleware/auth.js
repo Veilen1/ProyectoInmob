@@ -1,18 +1,20 @@
 import jwt from 'jsonwebtoken';
 
 export const auth = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
-  if (!token) return res.status(401).json({ error: 'No token, authorization denied' });
-
+  const authHeader = req.headers['authorization'] || req.header('Authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'No token, authorization denied' });
+  }
+  const token = authHeader.replace('Bearer ', '');
   try {
     if (!process.env.JWT_SECRET) {
-      throw new Error('JWT_SECRET is not defined');
+      return res.status(500).json({ error: 'JWT_SECRET is not defined in environment variables' });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(400).json({ error: err.message || 'Token is not valid' });
+    return res.status(401).json({ error: 'Token is not valid or expired' });
   }
 };
 
